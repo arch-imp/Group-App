@@ -1,141 +1,142 @@
-ÿ<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-	<head>
-		<title>Student Groups</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-	  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-		<style>
-		
-			body {
-				font-family: "Montserrat", sans-serif;
-			}
-			
-			ul {
-				list-style-type: none;
-				width: 300px;
-				height: fit-content;
-				max-height: 300px;
-				margin: 10px;
-				padding: 0;
-				overflow: auto;
-				border-style: solid;
-				border-radius: 25px;
-				border-color: mediumOrchid;
-			}
-			
-			main {
-				float: center;
-				padding: 50;
-				text-align: center;
-			}
-			
-			div {
-				margin: auto;
-      	width: 300px;
-      	height: 300px;
-      	padding: 10px;
-				overflow: auto;
-				border-style: solid;
-				border-radius: 25px;
-				border-color: mediumOrchid;
-			}
-			
-			figure {
-				display: inline-block;
-				height: fit-content;
-			}
-			
-			li {
-				background: violet; 
-			}
-			
-			li:nth-child(odd) { 
-				background: mediumOrchid; 
-			}
-			
-		</style>
-		<script type="text/javascript" src="script.js">
-		</script>
-	</head>
-	<body onload="onLoad()" style="background:mediumOrchid;">
-		<main style="padding: 30px;">
-		<article style="background: white; padding: 30px; border-radius: 25px;">
-			<h1 id="mainHeader">Welcome</h1>
-			<p id="mainDescription"></p>
-			
-			<!--- Elements used for the configuration menu --->
-				<ul id="studentList" style="display: none">
-				</ul>
-				<br id="b1" style="display: none">
-				<label for="groupSize" id="sizeLabel" style="display: none;">Group size:&nbsp;</label>
-				<input type="number" id="groupSize" min="1" value="3" style="display: none; width: 40px;">
-				<br id="b3" style="display: none">
-				<br id="b4" style="display: none">
-				<label for="groupingName" id="nameLabel" style="display: none">Name this grouping:&nbsp;</label>
-				<input type="text" id="groupingName" style="display: none; width: 140px">
 
-				<br id="b5" style="display: none">
-				<br id="b6" style="display: none">
-				
-				<input type="button" class="btn btn-primary btn-lg" id="generateButton" value="Generate groups!" onclick="generateGroups()" style="display: none; background: purple;">
-				<br id="b7" style="display: none">
-				<br id="b8" style="display: none">
-				<input type="button" id="backButtonConfiguration" value="Back to home" onclick="home()" style="display: none;">
-				<br id="b9" style="display: none">
-				<br id="b10" style="display: none">
-			<!--- End of configuration menu --->
-			
-			<!--- Elements used for file picker --->
-				<label for="dropDown" id="dropDownLabel">Choose a class list to get started:</label>
-				<select id="dropDown">
-				</select>
-				<br id="b12">
-				<br id="b13">
-				<input type="submit" class="btn btn-primary btn-lg" style="background: purple;" id="dropDownSubmit" onclick="submitted()">
-				<br id="b14">
-				<br id="b15">
-				<input type="file" id="fileSelect" style="display: none" onchange="fileSelected()">
-				<p id="or">Or</p>
-				<input type="button" id="editClasses" value="Edit your classes" onclick="editClassMenu()">
-			<!--- End of file picker --->
-		
-			<!--- Elements used for edit classes menu --->
-			  <input type="file" id="fileSelectEdit" style="display: none" onchange="fileSelectedForEditMenu()">
-				<input type="button" id="renameListButton" value="Rename class" style="display: none;">
-				<input type="button" id="deleteListButton" value="Delete class" style="display: none;">
-				<input type="button" id="sortListButton" value="Sort class A-Z" style="display: none;">
-				<br id="b26" style="display: none;">
-				<ul id="listOfClasses" style="display: none; width: 400px; height: fit-content;">
-				</ul>
-				<br id="b20" style="display: none;">
-				<input type="button" id="newClassButton" class="btn btn-primary btn-lg" value="Create new class" style="background: purple; display: none;" onclick="showNewClassOptions()">
-				<input type="button" id="newClassCancel" value="<" class="btn btn-primary btn-lg" style="background: purple; display: none;" onclick="hideNewClassOptions()">
-				<input type="button" id="newClassFromScratch" class="btn btn-primary btn-lg" value="From scratch" style="background: purple; display: none;" onclick="newClassFromScratch()">
-				<input type="button" id="newClassFromFile" class="btn btn-primary btn-lg" value="From file (.csv)" style="background: purple; display: none;" onclick="newClassFromFile()">
-				<!--- Split between buttons for the class list menu, and buttons for the student list menu --->
-				<input type="button" id="newStudentButton" class="btn btn-primary btn-lg" value="Add new student" style="background: purple; display: none;">
-				<br id="b18" style="display: none;">
-				<br id="b19" style="display: none;">
-				<input type="button" id="backToListButton" value="Back to Classes" onclick="backToList()" style="display: none;">
-				<input type="button" id="backButton" value="Back to Home" onclick="home()" style="display: none;">
-			<!--- End of edit classes menu --->
-			
-			<!--- Elements used for viewing the grouping --->
-			  <input type="button" id="renameButton" style="display: none" value="Rename" onclick="renameGrouping()">
-				<input type="button" id="reshuffleButton" style="display: none" value="Reshuffle" onclick="generateGroups()">
-				<input type="button" id="saveButton" style="display: none" value="Save" onclick="saveGrouping()">
-				<br id="b22" style="display: none;">
-				<br id="b23" style="display: none;">
-				<input type="button" id="newButton" class="btn btn-primary btn-lg" style="display: none; background: purple;" value="Start Over" onclick="newGrouping()">
-				<br id="b24" style="display: none;">
-				<br id="b25" style="display: none;">
-				<div id="groupingBox" style="display: none; width: 80vw; height: fit-content;">
-				</div>
-			<!--- End of viewing grouping --->
-			
-		</article>
-		</main>
-	</body>
-</html>	
+<head>
+    <title>Student Groups</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <style>
+        body {
+            font-family: "Montserrat", sans-serif;
+        }
+
+        ul {
+            list-style-type: none;
+            /* width: 300px; */
+            height: fit-content;
+            max-height: 300px;
+            margin: 10px;
+            padding: 0;
+            overflow: auto;
+            border-style: solid;
+            border-radius: 25px;
+            border-color: mediumOrchid;
+        }
+
+        main {
+            float: center;
+            padding: 50;
+            text-align: center;
+        }
+
+        div {
+            margin: auto;
+            width: 300px;
+            height: 300px;
+            padding: 10px;
+            overflow: auto;
+            border-style: solid;
+            border-radius: 25px;
+            border-color: mediumOrchid;
+        }
+
+        figure {
+            display: inline-block;
+            height: fit-content;
+        }
+
+        li {
+            background: violet;
+        }
+
+        li:nth-child(odd) {
+            background: mediumOrchid;
+        }
+    </style>
+    <script type="text/javascript" src="script.js">
+    </script>
+</head>
+
+<body onload="onLoad()" style="background:mediumOrchid;">
+    <main style="padding: 30px;">
+        <article style="background: white; padding: 30px; border-radius: 25px;">
+            <h1 id="mainHeader">Welcome</h1>
+            <p id="mainDescription"></p>
+
+            <!--- Elements used for the configuration menu --->
+            <ul id="studentList" style="display: none">
+            </ul>
+            <br id="b1" style="display: none">
+            <label for="groupSize" id="sizeLabel" style="display: none;">Group size:&nbsp;</label>
+            <input type="number" id="groupSize" min="1" value="3" style="display: none; width: 40px;">
+            <br id="b3" style="display: none">
+            <br id="b4" style="display: none">
+            <label for="groupingName" id="nameLabel" style="display: none">Name this grouping:&nbsp;</label>
+            <input type="text" id="groupingName" style="display: none; width: 140px">
+
+            <br id="b5" style="display: none">
+            <br id="b6" style="display: none">
+
+            <input type="button" class="btn btn-primary btn-lg" id="generateButton" value="Generate groups!" onclick="generateGroups()" style="display: none; background: purple;">
+            <br id="b7" style="display: none">
+            <br id="b8" style="display: none">
+            <input type="button" id="backButtonConfiguration" value="Back to home" onclick="home()" style="display: none;">
+            <br id="b9" style="display: none">
+            <br id="b10" style="display: none">
+            <!--- End of configuration menu --->
+
+            <!--- Elements used for file picker --->
+            <label for="dropDown" id="dropDownLabel">Choose a class list to get started:</label>
+            <select id="dropDown">
+            </select>
+            <br id="b12">
+            <br id="b13">
+            <input type="submit" class="btn btn-primary btn-lg" style="background: purple;" id="dropDownSubmit" onclick="submitted()">
+            <br id="b14">
+            <br id="b15">
+            <input type="file" id="fileSelect" style="display: none" onchange="fileSelected()">
+            <p id="or">Or</p>
+            <input type="button" id="editClasses" value="Edit your classes" onclick="editClassMenu()">
+            <!--- End of file picker --->
+
+            <!--- Elements used for edit classes menu --->
+            <input type="file" id="fileSelectEdit" style="display: none" onchange="fileSelectedForEditMenu()">
+            <input type="button" id="renameListButton" value="Rename class" style="display: none;">
+            <input type="button" id="deleteListButton" value="Delete class" style="display: none;">
+            <input type="button" id="sortListButton" value="Sort class A-Z" style="display: none;">
+            <br id="b26" style="display: none;">
+            <ul id="listOfClasses" style="display: none; width: 400px; height: fit-content;">
+            </ul>
+            <br id="b20" style="display: none;">
+            <input type="button" id="newClassButton" class="btn btn-primary btn-lg" value="Create new class" style="background: purple; display: none;" onclick="showNewClassOptions()">
+            <input type="button" id="newClassCancel" value="<" class="btn btn-primary btn-lg" style="background: purple; display: none;" onclick="hideNewClassOptions()">
+            <input type="button" id="newClassFromScratch" class="btn btn-primary btn-lg" value="From scratch" style="background: purple; display: none;" onclick="newClassFromScratch()">
+            <input type="button" id="newClassFromFile" class="btn btn-primary btn-lg" value="From file (.csv)" style="background: purple; display: none;" onclick="newClassFromFile()">
+            <!--- Split between buttons for the class list menu, and buttons for the student list menu --->
+            <input type="button" id="newStudentButton" class="btn btn-primary btn-lg" value="Add new student" style="background: purple; display: none;">
+            <br id="b18" style="display: none;">
+            <br id="b19" style="display: none;">
+            <input type="button" id="backToListButton" value="Back to Classes" onclick="backToList()" style="display: none;">
+            <input type="button" id="backButton" value="Back to Home" onclick="home()" style="display: none;">
+            <!--- End of edit classes menu --->
+
+            <!--- Elements used for viewing the grouping --->
+            <input type="button" id="renameButton" style="display: none" value="Rename" onclick="renameGrouping()">
+            <input type="button" id="reshuffleButton" style="display: none" value="Reshuffle" onclick="generateGroups()">
+            <input type="button" id="saveButton" style="display: none" value="Save" onclick="saveGrouping()">
+            <br id="b22" style="display: none;">
+            <br id="b23" style="display: none;">
+            <input type="button" id="newButton" class="btn btn-primary btn-lg" style="display: none; background: purple;" value="Start Over" onclick="newGrouping()">
+            <br id="b24" style="display: none;">
+            <br id="b25" style="display: none;">
+            <div id="groupingBox" style="display: none; width: 80vw; height: fit-content;">
+            </div>
+            <!--- End of viewing grouping --->
+
+        </article>
+    </main>
+</body>
+
+</html>
